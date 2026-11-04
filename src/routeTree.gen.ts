@@ -16,6 +16,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedApprendreRouteImport } from './routes/_authenticated/apprendre'
 import { Route as AuthenticatedAujourdhuiRouteImport } from './routes/_authenticated/aujourdhui'
 import { Route as AuthenticatedCatalogueRouteImport } from './routes/_authenticated/catalogue'
+import { Route as AuthenticatedOutilsRouteImport } from './routes/_authenticated/outils'
 import { Route as AuthenticatedReglagesRouteImport } from './routes/_authenticated/reglages'
 import { Route as AuthenticatedReseauRouteImport } from './routes/_authenticated/reseau'
 
@@ -53,6 +54,11 @@ const AuthenticatedCatalogueRoute = AuthenticatedCatalogueRouteImport.update({
   path: '/catalogue',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedOutilsRoute = AuthenticatedOutilsRouteImport.update({
+  id: '/outils',
+  path: '/outils',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedReglagesRoute = AuthenticatedReglagesRouteImport.update({
   id: '/reglages',
   path: '/reglages',
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/apprendre': typeof AuthenticatedApprendreRoute
   '/aujourdhui': typeof AuthenticatedAujourdhuiRoute
   '/catalogue': typeof AuthenticatedCatalogueRoute
+  '/outils': typeof AuthenticatedOutilsRoute
   '/reglages': typeof AuthenticatedReglagesRoute
   '/reseau': typeof AuthenticatedReseauRoute
 }
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/apprendre': typeof AuthenticatedApprendreRoute
   '/aujourdhui': typeof AuthenticatedAujourdhuiRoute
   '/catalogue': typeof AuthenticatedCatalogueRoute
+  '/outils': typeof AuthenticatedOutilsRoute
   '/reglages': typeof AuthenticatedReglagesRoute
   '/reseau': typeof AuthenticatedReseauRoute
 }
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/_authenticated/apprendre': typeof AuthenticatedApprendreRoute
   '/_authenticated/aujourdhui': typeof AuthenticatedAujourdhuiRoute
   '/_authenticated/catalogue': typeof AuthenticatedCatalogueRoute
+  '/_authenticated/outils': typeof AuthenticatedOutilsRoute
   '/_authenticated/reglages': typeof AuthenticatedReglagesRoute
   '/_authenticated/reseau': typeof AuthenticatedReseauRoute
 }
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/apprendre'
     | '/aujourdhui'
     | '/catalogue'
+    | '/outils'
     | '/reglages'
     | '/reseau'
   fileRoutesByTo: FileRoutesByTo
@@ -115,6 +125,7 @@ export interface FileRouteTypes {
     | '/apprendre'
     | '/aujourdhui'
     | '/catalogue'
+    | '/outils'
     | '/reglages'
     | '/reseau'
   id:
@@ -126,6 +137,7 @@ export interface FileRouteTypes {
     | '/_authenticated/apprendre'
     | '/_authenticated/aujourdhui'
     | '/_authenticated/catalogue'
+    | '/_authenticated/outils'
     | '/_authenticated/reglages'
     | '/_authenticated/reseau'
   fileRoutesById: FileRoutesById
@@ -188,6 +200,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCatalogueRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/outils': {
+      id: '/_authenticated/outils'
+      path: '/outils'
+      fullPath: '/outils'
+      preLoaderRoute: typeof AuthenticatedOutilsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/reglages': {
       id: '/_authenticated/reglages'
       path: '/reglages'
@@ -209,6 +228,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedApprendreRoute: typeof AuthenticatedApprendreRoute
   AuthenticatedAujourdhuiRoute: typeof AuthenticatedAujourdhuiRoute
   AuthenticatedCatalogueRoute: typeof AuthenticatedCatalogueRoute
+  AuthenticatedOutilsRoute: typeof AuthenticatedOutilsRoute
   AuthenticatedReglagesRoute: typeof AuthenticatedReglagesRoute
   AuthenticatedReseauRoute: typeof AuthenticatedReseauRoute
 }
@@ -217,6 +237,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedApprendreRoute: AuthenticatedApprendreRoute,
   AuthenticatedAujourdhuiRoute: AuthenticatedAujourdhuiRoute,
   AuthenticatedCatalogueRoute: AuthenticatedCatalogueRoute,
+  AuthenticatedOutilsRoute: AuthenticatedOutilsRoute,
   AuthenticatedReglagesRoute: AuthenticatedReglagesRoute,
   AuthenticatedReseauRoute: AuthenticatedReseauRoute,
 }
