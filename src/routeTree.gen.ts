@@ -13,7 +13,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthenticatedApprendreRouteImport } from './routes/_authenticated/apprendre'
 import { Route as AuthenticatedAujourdhuiRouteImport } from './routes/_authenticated/aujourdhui'
+import { Route as AuthenticatedCatalogueRouteImport } from './routes/_authenticated/catalogue'
+import { Route as AuthenticatedReglagesRouteImport } from './routes/_authenticated/reglages'
 import { Route as AuthenticatedReseauRouteImport } from './routes/_authenticated/reseau'
 
 const IndexRoute = IndexRouteImport.update({
@@ -35,9 +38,24 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedApprendreRoute = AuthenticatedApprendreRouteImport.update({
+  id: '/apprendre',
+  path: '/apprendre',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAujourdhuiRoute = AuthenticatedAujourdhuiRouteImport.update({
   id: '/aujourdhui',
   path: '/aujourdhui',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCatalogueRoute = AuthenticatedCatalogueRouteImport.update({
+  id: '/catalogue',
+  path: '/catalogue',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedReglagesRoute = AuthenticatedReglagesRouteImport.update({
+  id: '/reglages',
+  path: '/reglages',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedReseauRoute = AuthenticatedReseauRouteImport.update({
@@ -50,14 +68,20 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/apprendre': typeof AuthenticatedApprendreRoute
   '/aujourdhui': typeof AuthenticatedAujourdhuiRoute
+  '/catalogue': typeof AuthenticatedCatalogueRoute
+  '/reglages': typeof AuthenticatedReglagesRoute
   '/reseau': typeof AuthenticatedReseauRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/apprendre': typeof AuthenticatedApprendreRoute
   '/aujourdhui': typeof AuthenticatedAujourdhuiRoute
+  '/catalogue': typeof AuthenticatedCatalogueRoute
+  '/reglages': typeof AuthenticatedReglagesRoute
   '/reseau': typeof AuthenticatedReseauRoute
 }
 export interface FileRoutesById {
@@ -66,21 +90,43 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/apprendre': typeof AuthenticatedApprendreRoute
   '/_authenticated/aujourdhui': typeof AuthenticatedAujourdhuiRoute
+  '/_authenticated/catalogue': typeof AuthenticatedCatalogueRoute
+  '/_authenticated/reglages': typeof AuthenticatedReglagesRoute
   '/_authenticated/reseau': typeof AuthenticatedReseauRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/reset-password' | '/aujourdhui' | '/reseau'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/apprendre'
+    | '/aujourdhui'
+    | '/catalogue'
+    | '/reglages'
+    | '/reseau'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/reset-password' | '/aujourdhui' | '/reseau'
+  to:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/apprendre'
+    | '/aujourdhui'
+    | '/catalogue'
+    | '/reglages'
+    | '/reseau'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/reset-password'
+    | '/_authenticated/apprendre'
     | '/_authenticated/aujourdhui'
+    | '/_authenticated/catalogue'
+    | '/_authenticated/reglages'
     | '/_authenticated/reseau'
   fileRoutesById: FileRoutesById
 }
@@ -121,11 +167,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/apprendre': {
+      id: '/_authenticated/apprendre'
+      path: '/apprendre'
+      fullPath: '/apprendre'
+      preLoaderRoute: typeof AuthenticatedApprendreRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/aujourdhui': {
       id: '/_authenticated/aujourdhui'
       path: '/aujourdhui'
       fullPath: '/aujourdhui'
       preLoaderRoute: typeof AuthenticatedAujourdhuiRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/catalogue': {
+      id: '/_authenticated/catalogue'
+      path: '/catalogue'
+      fullPath: '/catalogue'
+      preLoaderRoute: typeof AuthenticatedCatalogueRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reglages': {
+      id: '/_authenticated/reglages'
+      path: '/reglages'
+      fullPath: '/reglages'
+      preLoaderRoute: typeof AuthenticatedReglagesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/reseau': {
@@ -139,12 +206,18 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedApprendreRoute: typeof AuthenticatedApprendreRoute
   AuthenticatedAujourdhuiRoute: typeof AuthenticatedAujourdhuiRoute
+  AuthenticatedCatalogueRoute: typeof AuthenticatedCatalogueRoute
+  AuthenticatedReglagesRoute: typeof AuthenticatedReglagesRoute
   AuthenticatedReseauRoute: typeof AuthenticatedReseauRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedApprendreRoute: AuthenticatedApprendreRoute,
   AuthenticatedAujourdhuiRoute: AuthenticatedAujourdhuiRoute,
+  AuthenticatedCatalogueRoute: AuthenticatedCatalogueRoute,
+  AuthenticatedReglagesRoute: AuthenticatedReglagesRoute,
   AuthenticatedReseauRoute: AuthenticatedReseauRoute,
 }
 
