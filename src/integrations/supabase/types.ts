@@ -14,16 +14,381 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      contacts: {
+        Row: {
+          created_at: string
+          cure_days: number | null
+          decision: string | null
+          email: string | null
+          goals: string | null
+          id: string
+          kind: string
+          name: string
+          next_followup: string | null
+          notes: string | null
+          order_date: string | null
+          phone: string | null
+          products: string | null
+          rank: string | null
+          rank_goal: string | null
+          rgpd_consent: boolean
+          road_to_gold: Json
+          scan_pdf_path: string | null
+          stage: string
+          user_id: string
+          weekly_review: Json
+        }
+        Insert: {
+          created_at?: string
+          cure_days?: number | null
+          decision?: string | null
+          email?: string | null
+          goals?: string | null
+          id?: string
+          kind?: string
+          name: string
+          next_followup?: string | null
+          notes?: string | null
+          order_date?: string | null
+          phone?: string | null
+          products?: string | null
+          rank?: string | null
+          rank_goal?: string | null
+          rgpd_consent?: boolean
+          road_to_gold?: Json
+          scan_pdf_path?: string | null
+          stage?: string
+          user_id?: string
+          weekly_review?: Json
+        }
+        Update: {
+          created_at?: string
+          cure_days?: number | null
+          decision?: string | null
+          email?: string | null
+          goals?: string | null
+          id?: string
+          kind?: string
+          name?: string
+          next_followup?: string | null
+          notes?: string | null
+          order_date?: string | null
+          phone?: string | null
+          products?: string | null
+          rank?: string | null
+          rank_goal?: string | null
+          rgpd_consent?: boolean
+          road_to_gold?: Json
+          scan_pdf_path?: string | null
+          stage?: string
+          user_id?: string
+          weekly_review?: Json
+        }
+        Relationships: []
+      }
+      daily_actions: {
+        Row: {
+          created_at: string
+          day: string
+          done: boolean
+          id: string
+          label: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          day?: string
+          done?: boolean
+          id?: string
+          label: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          day?: string
+          done?: boolean
+          id?: string
+          label?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      events: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          link: string | null
+          starts_at: string
+          title: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind?: string
+          link?: string | null
+          starts_at: string
+          title: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          link?: string | null
+          starts_at?: string
+          title?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      monthly_goals: {
+        Row: {
+          created_at: string
+          done: number
+          id: string
+          label: string
+          month: string
+          planned: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          done?: number
+          id?: string
+          label: string
+          month: string
+          planned?: number
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          done?: number
+          id?: string
+          label?: string
+          month?: string
+          planned?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notes: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          benefits: string | null
+          color: string
+          created_at: string
+          id: string
+          image_url: string | null
+          ingredients: string | null
+          name: string
+          public_price: number
+          range: string
+          sort: number
+          tagline: string | null
+          usage: string | null
+          videos: string[]
+        }
+        Insert: {
+          benefits?: string | null
+          color?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          ingredients?: string | null
+          name: string
+          public_price?: number
+          range: string
+          sort?: number
+          tagline?: string | null
+          usage?: string | null
+          videos?: string[]
+        }
+        Update: {
+          benefits?: string | null
+          color?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          ingredients?: string | null
+          name?: string
+          public_price?: number
+          range?: string
+          sort?: number
+          tagline?: string | null
+          usage?: string | null
+          videos?: string[]
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          currency: string
+          first_name: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          first_name?: string
+          id: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          first_name?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      resources: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          kind: string
+          title: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          kind?: string
+          title: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          kind?: string
+          title?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      scripts: {
+        Row: {
+          category: string
+          content: string
+          created_at: string
+          id: string
+          title: string
+        }
+        Insert: {
+          category?: string
+          content: string
+          created_at?: string
+          id?: string
+          title: string
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string
+          id?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      todos: {
+        Row: {
+          created_at: string
+          done: boolean
+          id: string
+          label: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          done?: boolean
+          id?: string
+          label: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          done?: boolean
+          id?: string
+          label?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      training_progress: {
+        Row: {
+          created_at: string
+          step_key: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          step_key: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          step_key?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +515,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
