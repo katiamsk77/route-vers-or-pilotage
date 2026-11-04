@@ -62,15 +62,15 @@ export function ContactDialog({
   const review = (c.weekly_review as Record<string, string> | null) ?? {};
 
   async function save() {
-    if (!c.name?.trim()) return toast.error("Le nom est obligatoire");
-    if (k === "client" && !c.rgpd_consent) return toast.error("Le consentement RGPD est obligatoire pour un client");
+    if (!c.name?.trim()) { toast.error("Le nom est obligatoire"); return; }
+    if (k === "client" && !c.rgpd_consent) { toast.error("Le consentement RGPD est obligatoire pour un client"); return; }
     setBusy(true);
     const payload = { ...c, name: c.name.trim() } as Contact;
     const { error } = contact
       ? await supabase.from("contacts").update(payload).eq("id", contact.id)
       : await supabase.from("contacts").insert(payload);
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["contacts"] });
     toast.success("Enregistré");
     onOpenChange(false);
@@ -87,7 +87,7 @@ export function ContactDialog({
     const { data: u } = await supabase.auth.getUser();
     const path = `${u.user!.id}/${crypto.randomUUID()}-${file.name}`;
     const { error } = await supabase.storage.from("scans").upload(path, file, { contentType: "application/pdf" });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     set("scan_pdf_path", path);
     toast.success("PDF joint — pensez à enregistrer");
   }

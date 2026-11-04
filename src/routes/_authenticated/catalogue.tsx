@@ -121,15 +121,15 @@ function Block({ title, text, list }: { title: string; text: string | null; list
 function ProductEditor({ product, onClose }: { product: Partial<Product> | null; onClose: () => void }) {
   const qc = useQueryClient();
   const [p, setP] = useState<Partial<Product>>({});
-  useEffect(() => { if (product) setP({ ...product, benefits: product.benefits?.replace(/\\n/g, "\n") }); }, [product]);
+  useEffect(() => { if (product) setP({ ...product, benefits: product.benefits?.replace(/\\n/g, "\n") ?? null }); }, [product]);
   const set = (k: keyof Product, v: unknown) => setP((x) => ({ ...x, [k]: v }));
 
   async function save() {
-    if (!p.name) return toast.error("Nom obligatoire");
+    if (!p.name) { toast.error("Nom obligatoire"); return; }
     const { error } = p.id
       ? await supabase.from("products").update(p as Product).eq("id", p.id)
       : await supabase.from("products").insert(p as Product);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["products"] });
     onClose();
   }

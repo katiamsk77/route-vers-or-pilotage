@@ -29,7 +29,7 @@ function Tools() {
       <Tabs defaultValue="scripts">
         <TabsList className="mb-4 flex h-auto w-full flex-wrap justify-start gap-1 rounded-2xl bg-muted p-1">
           {[["scripts", "Scripts"], ["presentations", "Présentations"], ["visuels", "Visuels"], ["objectifs", "Objectifs"], ["agenda", "Agenda"], ["notes", "Notes"], ["todo", "To-do"], ["export", "Export"]].map(([v, l]) => (
-            <TabsTrigger key={v} value={v} className="rounded-xl">{l}</TabsTrigger>
+            <TabsTrigger key={v} value={v!} className="rounded-xl">{l}</TabsTrigger>
           ))}
         </TabsList>
         <TabsContent value="scripts"><Scripts /></TabsContent>
@@ -53,7 +53,7 @@ function Scripts() {
   async function add() {
     if (!t || !c) return;
     const { error } = await supabase.from("scripts").insert({ title: t, content: c, category: cat });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setT(""); setC(""); qc.invalidateQueries({ queryKey: ["scripts"] });
   }
   return (
@@ -91,7 +91,7 @@ function Resources({ kind }: { kind: "presentation" | "visuel" }) {
   async function add() {
     if (!t || !u) return;
     const { error } = await supabase.from("resources").insert({ title: t, url: u, kind });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setT(""); setU(""); qc.invalidateQueries({ queryKey: ["resources"] });
   }
   async function share(title: string, url: string) {
@@ -162,9 +162,9 @@ function Agenda() {
   const [t, setT] = useState(""); const [d, setD] = useState(""); const [k, setK] = useState("RDV"); const [link, setLink] = useState(""); const [team, setTeam] = useState(false);
   const refresh = () => qc.invalidateQueries({ queryKey: ["events"] });
   async function add() {
-    if (!t || !d) return toast.error("Titre et date requis");
-    const { error } = await supabase.from("events").insert({ title: t, starts_at: new Date(d).toISOString(), kind: k, link: link || null, user_id: team ? null : me?.id });
-    if (error) return toast.error(error.message);
+    if (!t || !d) { toast.error("Titre et date requis"); return; }
+    const { error } = await supabase.from("events").insert({ title: t, starts_at: new Date(d).toISOString(), kind: k, link: link || null, user_id: team ? null : (me?.id ?? null) });
+    if (error) { toast.error(error.message); return; }
     setT(""); setD(""); setLink(""); refresh();
   }
   return (

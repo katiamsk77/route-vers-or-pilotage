@@ -20,12 +20,12 @@ function SettingsPage() {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [currency, setCurrency] = useState("USD");
-  useEffect(() => { if (me) { setFirstName(me.firstName); setCurrency(me.currency); } }, [me]);
+  useEffect(() => { if (me) { setFirstName(me.firstName ?? ""); setCurrency(me.currency); } }, [me]);
 
   async function save() {
     if (!me) return;
     const { error } = await supabase.from("profiles").update({ first_name: firstName, currency }).eq("id", me.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["me"] });
     toast.success("Réglages enregistrés");
   }
@@ -38,7 +38,7 @@ function SettingsPage() {
 
   return (
     <div className="space-y-4">
-      <PageHeader title="Réglages" subtitle={me?.email} />
+      <PageHeader title="Réglages" subtitle={me?.email ?? ""} />
       <section className="card-soft space-y-3">
         <div className="space-y-1"><Label>Prénom</Label><Input value={firstName} onChange={(e) => setFirstName(e.target.value)} /></div>
         <div className="space-y-1">
