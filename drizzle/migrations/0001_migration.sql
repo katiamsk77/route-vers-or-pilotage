@@ -1,3 +1,0 @@
-create policy "own scans read" on storage.objects for select to authenticated using (bucket_id = 'scans' and (storage.foldername(name))[1] = auth.uid()::text);
-create policy "own scans insert" on storage.objects for insert to authenticated with check (bucket_id = 'scans' and (storage.foldername(name))[1] = auth.uid()::text);
-create policy "own scans delete" on storage.objects for delete to authenticated using (bucket_id = 'scans' and (storage.foldername(name))[1] = auth.uid()::text);
