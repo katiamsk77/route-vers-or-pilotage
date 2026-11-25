@@ -1,3 +1,18 @@
+-- =====================================================================
+-- myvitalhealth : création complète de la base de données
+-- =====================================================================
+-- À exécuter UNE SEULE FOIS, sur un projet Supabase neuf :
+--   Supabase > SQL Editor > New query > coller tout ce fichier > Run
+--
+-- Ce script crée :
+--   - les tables (profils, rôles, contacts, actions du jour, notes,
+--     to-do, objectifs, formation, agenda, produits, scripts, ressources)
+--   - les règles de sécurité : chaque utilisateur ne voit que SES contacts,
+--     seul l'administrateur modifie le contenu commun (catalogue, scripts…)
+--   - le premier compte créé devient automatiquement administrateur
+--   - l'espace de stockage privé « scans » pour les PDF d'analyse
+-- =====================================================================
+
 
 create type public.app_role as enum ('admin','user');
 
@@ -195,16 +210,17 @@ alter table public.resources enable row level security;
 create policy "read resources" on public.resources for select to authenticated using (true);
 create policy "admin resources" on public.resources for all to authenticated using (public.has_role(auth.uid(),'admin')) with check (public.has_role(auth.uid(),'admin'));
 
--- Données d'exemple
-insert into public.products (name, range, color, tagline, benefits, ingredients, usage, public_price, sort) values
-('V-Organex','Désintoxication','#3f7d3a','Détox douce de l''organisme','Soutient l''élimination naturelle\nFavorise le confort digestif\nAide à retrouver de la légèreté','Extraits de plantes, chlorophylle, fibres végétales','1 sachet par jour dans un grand verre d''eau, de préférence le matin.',59,1),
-('V-Daily','Nourrir','#e0a526','Vos nutriments essentiels au quotidien','Apport complet en vitamines et minéraux\nSoutient l''énergie et la vitalité\nContribue au bon fonctionnement du système immunitaire','Vitamines A, C, D, E, B, minéraux, extraits de fruits','1 dose par jour pendant le repas.',49,2),
-('Nourish+','Nourrir','#c2523c','Nutrition cellulaire avancée','Nourrit les cellules en profondeur\nSoutient la récupération\nFavorise le bien-être général','Superaliments, acides aminés, antioxydants','1 portion par jour, à mélanger avec de l''eau ou un smoothie.',69,3);
+-- Stockage des PDF d'analyse de scan (privé : chacun ne voit que ses fichiers)
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('scans', 'scans', false, 20971520, array['application/pdf'])
+on conflict (id) do nothing;
 
+create policy "own scans read" on storage.objects for select to authenticated using (bucket_id = 'scans' and (storage.foldername(name))[1] = auth.uid()::text);
+create policy "own scans insert" on storage.objects for insert to authenticated with check (bucket_id = 'scans' and (storage.foldername(name))[1] = auth.uid()::text);
+create policy "own scans delete" on storage.objects for delete to authenticated using (bucket_id = 'scans' and (storage.foldername(name))[1] = auth.uid()::text);
+
+-- Quelques messages types pour démarrer (modifiables ensuite dans l'appli)
 insert into public.scripts (title, category, content) values
 ('Premier message','Prospection','Bonjour [prénom] ! J''espère que tu vas bien. Je pense à toi car je découvre des solutions bien-être naturelles qui me font beaucoup de bien. Est-ce que tu serais curieux(se) d''en savoir un peu plus ?'),
 ('Proposer un scan','Prospection','Je propose en ce moment un scan bien-être gratuit (facial ou quantique) qui donne un aperçu de ton équilibre. Ça te dirait d''essayer cette semaine ?'),
 ('Relance fin de cure','Clients','Coucou [prénom] ! Ta cure arrive bientôt à sa fin. Comment te sens-tu ? Veux-tu qu''on fasse le point ensemble pour la suite ?');
-
-insert into public.events (user_id, title, kind, starts_at, link) values
-(null,'Zoom d''équipe hebdomadaire','Zoom', (date_trunc('week', now()) + interval '9 days 19 hours'), null);
