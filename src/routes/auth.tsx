@@ -64,7 +64,8 @@ function AuthPage() {
       <form onSubmit={submit} className="card-soft w-full max-w-sm space-y-4 p-6">
         <div className="text-center">
           <img src="/icon-192.png" alt="" width={56} height={56} className="mx-auto rounded-2xl" />
-          <h1 className="mt-3 text-2xl font-semibold text-forest">
+          <p className="mt-2 text-lg font-semibold tracking-wide text-forest">MyVitalHealth</p>
+          <h1 className="mt-2 text-2xl font-semibold text-forest">
             {mode === "in" ? "Connexion" : mode === "up" ? "Créer mon compte" : "Mot de passe oublié"}
           </h1>
         </div>
